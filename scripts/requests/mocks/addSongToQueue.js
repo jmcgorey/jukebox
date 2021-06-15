@@ -1,5 +1,5 @@
-import { addSongToQueue } from "./data.js";
-import { getSongsList } from "./getSongList.js";
+import { addSongToQueue as addSongToDataQueue } from "./data.js";
+import { getSongList } from "./getSongList.js";
 
 let songInPlayedSongs = false;
 let songInQueue = false;
@@ -23,8 +23,8 @@ export function setCanAddSongIfInPlayedSongs(flag) {
 }
 
 export async function addSongToQueue(songId) {
-	const songList = await getSongsList();
-	const song = songList.find((s) => s.id === songId);
+	const songList = await getSongList();
+	const song = songList.find((s) => s.id == songId);
 	if (!song) {
 		throw new Error(`Unexpected error.  A song with the id of "${songId}" could not be found.`);
 	} else if (songInQueue && !canAddSongIfInQueue) {
@@ -33,5 +33,5 @@ export async function addSongToQueue(songId) {
 		throw new Error("The song cannot be added because it has already been played.");
 	}
 
-	addSongToQueue(song);
+	addSongToDataQueue(song);
 }
